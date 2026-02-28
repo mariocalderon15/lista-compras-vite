@@ -1,25 +1,54 @@
+
 import './style.css'
-import Productos from './productos.js';
-import ListaDeCompras from './lista-compras.js';
-import {agegarProductoAlDOM, actualizarTotal } from './dom.js';
 
-const listaCompras = new ListaDeCompras();
+let productos = [
+  {nombre: 'manzana', precio: 1.30, categoria: 'fruta'},
+  {nombre: 'uva', precio: 1.30, categoria: 'fruta'},
+  {nombre: 'pera', precio: 1.30, categoria: 'fruta'},
+  {nombre: 'naranja', precio: 1.30, categoria: 'fruta'},
+  {nombre: 'mandarina', precio: 1.30, categoria: 'fruta'}
+];
 
-document.getElementById('agregar-produto').addEventListener('click',function(){
-  const nombre = document.getElementById('producto-nombre').value;
-  const precio = parseFloat(document.getElementById('producto-precio').value);
-  const categoria = document.getElementById('procuto-categoria').value;
+let filtroActual = '';
 
-  const procuto = new Productos(nombre, precio, categoria);
-  listaCompras.agregarProductos(producto);
+function render(){
+  const lista = document.getElementById('lista-productos');
+  lista.innerHTML = '';
 
-  agegarProductoAlDOM(producto);
-  actualizarTotal(listaCompras);
-} )
+  const productosFiltrados = productos.filter(p =>
+    p.nombre.toLowerCase().includes(filtroActual.toLowerCase())
+  );
 
+  productosFiltrados.forEach(producto => {
+    const li = document.createElement('li');
+    li.textContent = producto.nombre;
 
+    const btnEliminar = document.createElement('button');
+    btnEliminar.textContent = 'Eliminar';
 
+    btnEliminar.addEventListener('click', ()=>{
+      eliminarProducto(producto);
+    });
 
+    li.appendChild(btnEliminar);
+    lista.appendChild(li);
+  });
+}
+
+function eliminarProducto(productoEliminar){
+  productos = productos.filter(p => p !== productoEliminar);
+  render();
+}
+
+const inputBuscar = document.getElementById('input-buscar');
+const btnBuscar = document.getElementById('btn-buscar');
+
+btnBuscar.addEventListener('click', ()=> {
+  filtroActual = inputBuscar.value;
+  render();
+});
+
+render();
 
 
 

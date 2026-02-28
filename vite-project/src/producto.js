@@ -1,9 +1,27 @@
 
-class Productos{
-    constructor(nombre, precio, categoria){
-        this.nombre = nombre;
-        this.precio = precio;
-        this.categoria = categoria;
-    }
+let carrito = [];
+
+function agregarProducto(producto){
+    if(producto === producto) throw new Error('Ingresaste 2 veces el mismo producto');
+     carrito.push(producto);
 }
-export default Productos;
+
+function eliminarProducto(producto){
+    carrito.pop(producto);
+}
+
+function vaciarCarrito(){
+
+}
+
+function calcularTotal(){
+
+}
+
+
+
+
+
+
+
+
